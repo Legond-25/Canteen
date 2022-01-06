@@ -1,4 +1,4 @@
-const Review = require('../models/reviewModel');
+const Review = require("../models/reviewModel");
 
 // Getting all review items from DB ----------> Tested (Working)
 exports.getAllReviews = async (req, res) => {
@@ -6,7 +6,7 @@ exports.getAllReviews = async (req, res) => {
     const reviewData = await Review.find();
 
     res.status(200).json({
-      status: 'success',
+      status: "success",
       results: reviewData.length,
       data: {
         data: reviewData,
@@ -14,8 +14,11 @@ exports.getAllReviews = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: 'fail',
+      status: "fail",
       message: err.message,
+      error: {
+        data: err,
+      },
     });
   }
 };
@@ -32,15 +35,21 @@ exports.updateReview = async (req, res) => {
       }
     );
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: {
         data: updateReview,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: 'fail',
+      status: "fail",
       message: err.message,
+      error: {
+        data: err,
+      },
+      error: {
+        data: err,
+      },
     });
   }
 };
@@ -49,11 +58,14 @@ exports.updateReview = async (req, res) => {
 exports.deleteReview = async (req, res) => {
   try {
     await Review.findByIdAndDelete(req.params.id);
-    res.status(200).json({ status: 'success', data: 'none' });
+    res.status(200).json({ status: "success", data: "none" });
   } catch (err) {
     res.status(400).json({
-      status: 'fail',
+      status: "fail",
       message: err.message,
+      error: {
+        data: err,
+      },
     });
   }
 };
@@ -63,15 +75,18 @@ exports.createReview = async (req, res) => {
   try {
     const newReviewItem = await Review.create(req.body);
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: {
         data: newReviewItem,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: 'fail',
+      status: "fail",
       message: err.message,
+      error: {
+        data: err,
+      },
     });
   }
 };
@@ -81,15 +96,18 @@ exports.getReview = async (req, res) => {
   try {
     const searchedReview = await Review.findById({ _id: req.params.id });
     res.status(200).json({
-      status: 'success',
+      status: "success",
       data: {
         data: searchedReview,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: 'fail',
+      status: "fail",
       message: err.message,
+      error: {
+        data: err,
+      },
     });
   }
 };

@@ -4,7 +4,6 @@ const Food = require("./../models/foodModel");
 exports.getAllFoods = async (req, res) => {
   try {
     const foodData = await Food.find();
-
     res.status(200).json({
       status: "success",
       results: foodData.length,
