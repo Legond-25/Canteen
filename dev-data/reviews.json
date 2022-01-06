@@ -1,0 +1,52 @@
+[
+  {
+    "name": "Vada-Pav",
+    "review": "After all, this deep-fried beauty is Mumbai's favourite fast food! Wrapped in a fluffy pav with the choicest spices, vada pav is best enjoyed when it's piping hot, especially in the monsoons.",
+    "rating": 5
+  },
+  {
+    "name": "Misal Pav",
+    "review": "Misal Pav is a vibrant meal consisting of a spicy sprouted bean curry topped with crunchy Farsan, crisp red onions, and fresh cilantro that is served with lightly buttered Pav or dinner rolls.",
+    "rating": 4
+  },
+  {
+    "name": "Paneer Butter Masala",
+    "review": "It has full fat paneer, cream, milk, cashew nuts which all are high in fat and not good for individuals with health issues. Can healthy individuals have Mutter Paneer Butter Masala? Yes! It's very healthy.",
+    "rating": 5
+  },
+  {
+    "name": "Pav Bhaji",
+    "review": "Indian food has become famous around the world for its complex flavor profiles and textures. It's especially popular among vegetarians since it usually has little to no meat in it.",
+    "rating": 3
+  },
+  {
+    "name": "Samosa",
+    "review": "It is crisp, hot and spicy; Samosa is not just any fried snack in India.",
+    "rating": 4
+  },
+  {
+    "name": "Kacchi Dabeli",
+    "review": "this place has the best kachchi dabeli in Pune. a lot of variety is offered - I particularly liked the Tikhat kachchi dabeli.",
+    "rating": 5
+  },
+  {
+    "name": "Veg Thali",
+    "review": "a condiment made with fruit, herbs, spices, and even vegetables raita, curds usually mixed with some kind of vegetable, pickles, most commonly made from raw mango, though that varies by region.",
+    "rating": 4
+  },
+  {
+    "name": "Idli Sambhar",
+    "review": "Yes, this recipe is very healthy BUT make it without the potatoes.",
+    "rating": 5
+  },
+  {
+    "name": "Chai",
+    "review": "Pretty cool ambience. We tried classic hot coffee and tea. Those who are only interested in taste pf drinks might find it okish, but the whole point of this place is the ambience and space to hangout",
+    "rating": 5
+  },
+  {
+    "name": "Chicken Curry",
+    "review": "ts chicken curry taste is similar like home cooked chicken,delicious gravy. I can't comment on its other items but going by the taste of its chicken curry I am pretty much assured that its other item would be decent only,they could be better also,must try if one wants to have delicious homemade chicken curry",
+    "rating": 5
+  }
+]
