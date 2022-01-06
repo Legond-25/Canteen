@@ -1,18 +1,18 @@
-const express = require("express");
-const foodController = require("./../controllers/foodController");
+const express = require('express');
+const foodController = require('./../controllers/foodController');
 
 // Setting Router
 const router = express.Router();
 
 // Creating Food Routes
 router
-  .route("/")
+  .route('/')
   .get(foodController.getAllFoods)
   .post(foodController.createFood);
 router
-  .route("/:id")
+  .route('/:id')
   .patch(foodController.updateFood)
-  .get(foodController.getSingleFood)
+  .get(foodController.getFood)
   .delete(foodController.deleteFood);
 
 // Exporting Router

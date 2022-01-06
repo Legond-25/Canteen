@@ -1,19 +1,19 @@
-const express = require("express");
-const userController = require("../controllers/userController");
-const { route } = require("./foodRoutes");
+const express = require('express');
+const userController = require('../controllers/userController');
+const { route } = require('./foodRoutes');
 
 // Setting Router
 const router = express.Router();
 
 // Creating User Routes
 router
-  .route("/")
+  .route('/')
   .get(userController.getAllUsers)
   .post(userController.createUser);
 router
-  .route("/:id")
+  .route('/:id')
   .patch(userController.updateUser)
-  .get(userController.getSingleUser)
+  .get(userController.getUser)
   .delete(userController.deletedUser);
 
 // Exporting Router

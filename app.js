@@ -1,10 +1,10 @@
 // Requiring Modules
-const express = require("express");
-const bodyParser = require("body-parser");
+const express = require('express');
+const bodyParser = require('body-parser');
 
 // Requiring files
-const foodRouter = require("./routes/foodRoutes");
-const userRouter = require("./routes/userRoutes");
+const foodRouter = require('./routes/foodRoutes');
+const userRouter = require('./routes/userRoutes');
 
 // Setting up app
 const app = express();
@@ -20,13 +20,13 @@ app.use(
 // Middlewares
 
 // API Routes
-app.use("/api/v1/foods", foodRouter);
-app.use("/api/v1/users", userRouter);
-app.use("/api/v1/reviews", reviewRouter);
+app.use('/api/v1/foods', foodRouter);
+app.use('/api/v1/users', userRouter);
+// app.use("/api/v1/reviews", reviewRouter);
 
 // Test
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get('/', (req, res) => {
+  res.send('Hello World!');
 });
 
 // Exporting app
