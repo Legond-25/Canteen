@@ -42,7 +42,7 @@ exports.updateUser = async (req, res) => {
 };
 
 // Deleting the particular user from DB ----------> Tested (Working)
-exports.deletedUser = async (req, res) => {
+exports.deleteUser = async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
     res.status(204).json({
