@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 // Requiring files
 const foodRouter = require('./routes/foodRoutes');
 const userRouter = require('./routes/userRoutes');
-// const reviewRouter = require('./routes/reviewRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
 
 // Setting up app
 const app = express();
@@ -23,7 +23,7 @@ app.use(
 // API Routes
 app.use('/api/v1/foods', foodRouter);
 app.use('/api/v1/users', userRouter);
-// app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/reviews', reviewRouter);
 
 // Test
 app.get('/', (req, res) => {
