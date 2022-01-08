@@ -1,11 +1,32 @@
-const Food = require("./../models/foodModel");
+const Food = require('../models/foodModel');
+const APIFeatures = require('../utils/ApiFeatures');
 
 // Getting all food items from DB ----------> Tested (Working)
 exports.getAllFoods = async (req, res) => {
   try {
-    const foodData = await Food.find();
+    // 1.) Basic Filtering
+    // excludedFields = ['sort', 'page', 'limit', 'skip'];
+
+    // let query = req.query;
+
+    // excludedFields.forEach((field) => {
+    //   delete query[field];
+    // });
+
+    // // 2.) Advanced Filtering
+    // const queryStr = JSON.stringify(query).replace(
+    //   /\b(gte|gt|lte|lt)\b/g,
+    //   (match) => `$${match}`
+    // );
+
+    // const foodData = await Food.find(query);
+
+    const features = new APIFeatures(Food, req.query).filter();
+
+    const foodData = await features.query;
+
     res.status(200).json({
-      status: "success",
+      status: 'success',
       results: foodData.length,
       data: {
         data: foodData,
@@ -13,7 +34,7 @@ exports.getAllFoods = async (req, res) => {
     });
   } catch (err) {
     res.status(404).json({
-      status: "fail",
+      status: 'fail',
       message: err.message,
       error: {
         data: err,
@@ -30,14 +51,14 @@ exports.updateFood = async (req, res) => {
       runValidators: true,
     });
     res.status(200).json({
-      status: "success",
+      status: 'success',
       data: {
         data: updatedFood,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: err.message,
       error: {
         data: err,
@@ -50,10 +71,10 @@ exports.updateFood = async (req, res) => {
 exports.deleteFood = async (req, res) => {
   try {
     await Food.findByIdAndDelete(req.params.id);
-    res.status(200).json({ status: "success", data: "none" });
+    res.status(200).json({ status: 'success', data: 'none' });
   } catch (err) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: err.message,
       error: {
         data: err,
@@ -67,14 +88,14 @@ exports.createFood = async (req, res) => {
   try {
     const newFoodItem = await Food.create(req.body);
     res.status(200).json({
-      status: "success",
+      status: 'success',
       data: {
         data: newFoodItem,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: err.message,
       error: {
         data: err,
@@ -88,14 +109,14 @@ exports.getFood = async (req, res) => {
   try {
     const searchedFood = await Food.findById({ _id: req.params.id });
     res.status(200).json({
-      status: "success",
+      status: 'success',
       data: {
         data: searchedFood,
       },
     });
   } catch (err) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: err.message,
       error: {
         data: err,
