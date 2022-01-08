@@ -1,6 +1,7 @@
 // Requiring Modules
 const express = require('express');
-const bodyParser = require('body-parser');
+const morgan = require('morgan');
+const dotenv = require('dotenv');
 
 // Requiring files
 const foodRouter = require('./routes/foodRoutes');
@@ -9,6 +10,14 @@ const reviewRouter = require('./routes/reviewRoutes');
 
 // Setting up app
 const app = express();
+
+// Dotenv config path
+dotenv.config({ path: './.env' });
+
+// Development logging
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 // Using BodyParser to parse the body
 app.use(express.json());
