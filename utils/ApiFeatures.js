@@ -25,6 +25,16 @@ class APIFeatures {
 
     return this;
   }
+
+  sort() {
+    if (!this.queryString.sort) {
+      this.query = this.query.sort("-ratingsAvg");
+    } else {
+      const sort = this.queryString.sort.split(',').join(' ');
+      this.query = this.query.sort(sort);
+    }
+    return this;
+  } 
 }
 
 module.exports = APIFeatures;
