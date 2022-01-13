@@ -25,6 +25,7 @@ class APIFeatures {
 
     return this;
   }
+
   // Sorting
   sort() {
     if (!this.queryString.sort) {
@@ -33,17 +34,32 @@ class APIFeatures {
       const sort = this.queryString.sort.split(",").join(" ");
       this.query = this.query.sort(sort);
     }
+
     return this;
   }
 
   // Pagination
   pagination() {
+    // const limit = +this.queryString.limit * 1 || 5;
     const limit = Number(this.queryString.limit) || 5;
     const currentPage = Number(this.queryString.page) || 1;
+
     const skip = limit * (currentPage - 1);
     this.query = this.query.limit(limit).skip(skip);
+
+    return this;
+  }
+
+  // limiting fields
+  limitfields() {
+    if (!this.queryString.fields) {
+      this.query = this.query.select("-ratingsAvg");
+    } else {
+      const select = this.queryString.fields.split(",").join(" ");
+      this.query = this.query.select(fields);
+    }
+
     return this;
   }
 }
-
 module.exports = APIFeatures;

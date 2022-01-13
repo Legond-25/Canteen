@@ -1,5 +1,7 @@
 const Food = require("../models/foodModel");
-const APIFeatures = require("../utils/ApiFeatures").default;
+const APIFeatures = require("../utils/ApiFeatures");
+const catchAsync = require("../utils/CatchAsync");
+const AppError = require("../utils/AppError");
 
 // Getting all food items from DB ----------> Tested (Working)
 exports.getAllFoods = async (req, res) => {
@@ -29,7 +31,8 @@ exports.getAllFoods = async (req, res) => {
     const features = new APIFeatures(Food.find(), req.query)
       .filter()
       .sort()
-      .pagination();
+      .pagination()
+      .limit();
 
     const foodData = await features.query;
 
@@ -92,30 +95,22 @@ exports.deleteFood = async (req, res) => {
 };
 
 // Creating A new Food Item ----------> Tested (Working)
-exports.createFood = async (req, res) => {
-  try {
-    const newFoodItem = await Food.create(req.body);
-    res.status(200).json({
-      status: "success",
-      data: {
-        data: newFoodItem,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
-      error: {
-        data: err,
-      },
-    });
-  }
-};
+exports.createFood = catchAsync(async (req, res, next) => {
+  const newFoodItem = await Food.create(req.body);
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      data: newFoodItem,
+    },
+  });
+});
 
 // Getting Food Item from DB ----------> Tested (Working)
 exports.getFood = async (req, res) => {
   try {
     const searchedFood = await Food.findById({ _id: req.params.id });
+
     res.status(200).json({
       status: "success",
       data: {
