@@ -26,6 +26,8 @@
         "import/no-extraneous-dependencies": "off",
         "import/no-useless-path-segments": "off",
         "no-trailing-spaces": "off",
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
+        "indent":"off",
+        "quotes":"off"
     }
 }

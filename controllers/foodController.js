@@ -21,7 +21,15 @@ exports.getAllFoods = async (req, res) => {
 
     // const foodData = await Food.find(query);
 
-    const features = new APIFeatures(Food.find(), req.query).filter();
+    // //sort
+    // const sort = req.query.sort.split(',').join(' ');
+    // console.log(sort);
+    // const foodData = await Food.find(req.query).sort(sort);
+
+    const features = new APIFeatures(Food.find(), req.query)
+      .filter()
+      .sort()
+      .pagination();
 
     const foodData = await features.query;
 
