@@ -32,7 +32,7 @@ exports.getAllFoods = async (req, res) => {
       .filter()
       .sort()
       .pagination()
-      .limit();
+      .limitFields();
 
     const foodData = await features.query;
 

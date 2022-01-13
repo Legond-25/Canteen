@@ -51,11 +51,11 @@ class APIFeatures {
   }
 
   // limiting fields
-  limitfields() {
+  limitFields() {
     if (!this.queryString.fields) {
-      this.query = this.query.select("-ratingsAvg");
+      this.query = this.query.select("-__v");
     } else {
-      const select = this.queryString.fields.split(",").join(" ");
+      const fields = this.queryString.fields.split(",").join(" ");
       this.query = this.query.select(fields);
     }
 
