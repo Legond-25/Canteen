@@ -7,7 +7,7 @@ class APIFeatures {
   filter() {
     // 1.) Basic Filtering
     const queryObj = { ...this.queryString };
-    const excludedFields = ["sort", "page", "limit"];
+    const excludedFields = ['sort', 'page', 'limit'];
 
     excludedFields.forEach((field) => {
       delete queryObj[field];
@@ -25,23 +25,28 @@ class APIFeatures {
 
     return this;
   }
+
   // Sorting
   sort() {
     if (!this.queryString.sort) {
-      this.query = this.query.sort("-ratingsAvg");
+      this.query = this.query.sort('-ratingsAvg');
     } else {
-      const sort = this.queryString.sort.split(",").join(" ");
+      const sort = this.queryString.sort.split(',').join(' ');
       this.query = this.query.sort(sort);
     }
+
     return this;
   }
 
   // Pagination
   pagination() {
+    // const limit = +this.queryString.limit * 1 || 5;
     const limit = Number(this.queryString.limit) || 5;
     const currentPage = Number(this.queryString.page) || 1;
+
     const skip = limit * (currentPage - 1);
     this.query = this.query.limit(limit).skip(skip);
+
     return this;
   }
 }
