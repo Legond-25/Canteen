@@ -7,7 +7,7 @@ class APIFeatures {
   filter() {
     // 1.) Basic Filtering
     const queryObj = { ...this.queryString };
-    const excludedFields = ['sort', 'page', 'limit'];
+    const excludedFields = ["sort", "page", "limit"];
 
     excludedFields.forEach((field) => {
       delete queryObj[field];
@@ -29,9 +29,9 @@ class APIFeatures {
   // Sorting
   sort() {
     if (!this.queryString.sort) {
-      this.query = this.query.sort('-ratingsAvg');
+      this.query = this.query.sort("-ratingsAvg");
     } else {
-      const sort = this.queryString.sort.split(',').join(' ');
+      const sort = this.queryString.sort.split(",").join(" ");
       this.query = this.query.sort(sort);
     }
 
@@ -49,6 +49,17 @@ class APIFeatures {
 
     return this;
   }
-}
 
+  // limiting fields
+  limitFields() {
+    if (!this.queryString.fields) {
+      this.query = this.query.select("-__v");
+    } else {
+      const fields = this.queryString.fields.split(",").join(" ");
+      this.query = this.query.select(fields);
+    }
+
+    return this;
+  }
+}
 module.exports = APIFeatures;
