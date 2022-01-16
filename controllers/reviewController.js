@@ -1,113 +1,80 @@
-const Review = require("../models/reviewModel");
+const Review = require('../models/reviewModel');
+const catchAsyncError = require('./../utils/CatchAsync');
+const AppError = require('./../utils/AppError');
 
 // Getting all review items from DB ----------> Tested (Working)
-exports.getAllReviews = async (req, res) => {
-  try {
-    const reviewData = await Review.find();
+exports.getAllReviews = catchAsyncError(async (req, res, next) => {
+  const reviewData = await Review.find();
 
-    res.status(200).json({
-      status: "success",
-      results: reviewData.length,
-      data: {
-        data: reviewData,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: "fail",
-      message: err.message,
-      error: {
-        data: err,
-      },
-    });
+  if (!reviewData) {
+    return next(new AppError('No Review Items', 404));
   }
-};
 
-// Updating the particular review item from DB ----------> Tested (Working)
-exports.updateReview = async (req, res) => {
-  try {
-    const updateReview = await Review.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-    res.status(200).json({
-      status: "success",
-      data: {
-        data: updateReview,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
-      error: {
-        data: err,
-      },
-      error: {
-        data: err,
-      },
-    });
-  }
-};
-
-// Deleting the particular food item from DB ----------> Tested (Working)
-exports.deleteReview = async (req, res) => {
-  try {
-    await Review.findByIdAndDelete(req.params.id);
-    res.status(200).json({ status: "success", data: "none" });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
-      error: {
-        data: err,
-      },
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    results: reviewData.length,
+    data: {
+      data: reviewData,
+    },
+  });
+});
 
 // Creating A new Food Item ----------> Tested (Working)
-exports.createReview = async (req, res) => {
-  try {
-    const newReviewItem = await Review.create(req.body);
-    res.status(200).json({
-      status: "success",
-      data: {
-        data: newReviewItem,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
-      error: {
-        data: err,
-      },
-    });
-  }
-};
+exports.createReview = catchAsyncError(async (req, res, next) => {
+  const newReviewItem = await Review.create(req.body);
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: newReviewItem,
+    },
+  });
+});
 
 // Getting Food Item from DB ----------> Tested (Working)
-exports.getReview = async (req, res) => {
-  try {
-    const searchedReview = await Review.findById({ _id: req.params.id });
-    res.status(200).json({
-      status: "success",
-      data: {
-        data: searchedReview,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: "fail",
-      message: err.message,
-      error: {
-        data: err,
-      },
-    });
+exports.getReview = catchAsyncError(async (req, res, next) => {
+  const searchedReview = await Review.findById({ _id: req.params.id });
+
+  if (!searchedReview) {
+    return next(new AppError(' Review not Found', 404));
   }
-};
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: searchedReview,
+    },
+  });
+});
+
+// Updating the particular review item from DB ----------> Tested (Working)
+exports.updateReview = catchAsyncError(async (req, res, next) => {
+  const updateReview = await Review.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!updateReview) {
+    return next(new AppError('Review Not Found', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: updateReview,
+    },
+  });
+});
+
+// Deleting the particular food item from DB ----------> Tested (Working)
+exports.deleteReview = catchAsyncError(async (req, res, next) => {
+  const deleteReview = await Review.findByIdAndDelete(req.params.id);
+
+  if (!deleteReview) {
+    return next(new AppError('Review Not Found', 404));
+  }
+  res.status(200).json({
+    status: 'success',
+    data: 'none',
+  });
+});
