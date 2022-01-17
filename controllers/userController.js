@@ -79,3 +79,53 @@ exports.deleteUser = catchAsyncError(async (req, res, next) => {
     data: 'none',
   });
 });
+
+// Getme
+exports.getMe = catchAsyncError(async (req, res, next) => {
+  const getMe = await User.findById(req.params.id);
+
+  if (!getMe) {
+    return next(new AppError('No User Found', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    results: getMe.length,
+    data: {
+      data: getMe,
+    },
+  });
+});
+
+// updateMe
+exports.updateMe = catchAsyncError(async (req, res, next) => {
+  const updatedMe = await User.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!updatedMe) {
+    return next(new AppError('User Not Found', 404));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      data: updatedMe,
+    },
+  });
+});
+
+// deleteMe
+exports.deleteMe = catchAsyncError(async (req, res, next) => {
+  const deletedMe = await User.findByIdAndDelete(req.params.id);
+
+  if (!deletedMe) {
+    return next(new AppError('User Not Found', 404));
+  }
+
+  res.status(204).json({
+    status: 'success',
+    data: 'none',
+  });
+});

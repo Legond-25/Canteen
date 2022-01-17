@@ -11,11 +11,11 @@ router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 
 // Creating User Routes
-// router.route('/me').get(userController.getMe);
-// router
-//   .route('/me/:id')
-//   .patch(userController.updateMe)
-//   .delete(userController.deleteMe);
+router.route('/me/:id').get(userController.getMe);
+router
+  .route('/me/:id')
+  .patch(userController.updateMe)
+  .delete(userController.deleteMe);
 
 // All routes below are only for admin
 router
