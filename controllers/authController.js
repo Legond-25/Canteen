@@ -1,3 +1,4 @@
+const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const catchAsyncError = require('./../utils/CatchAsync');
@@ -11,6 +12,15 @@ const signToken = (user) => {
 
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user);
+
+  const cookieOptions = {
+    httpOnly: true,
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+  };
+
+  res.cookie('jwt', token, cookieOptions);
 
   res.status(statusCode).json({
     status: 'success',
@@ -61,7 +71,69 @@ exports.login = catchAsyncError(async (req, res, next) => {
 });
 
 exports.logout = (req, res) => {
+  res.cookie('jwt', 'loggedout', {
+    expires: new Date(Date.now() + 10 * 1000),
+    httpOnly: true,
+  });
+
   res
     .status(200)
     .json({ status: 'success', message: 'Successfully logged out' });
+};
+
+exports.protect = catchAsyncError(async (req, res, next) => {
+  // 1.) Get token and check if it exists
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies.jwt) {
+    token = req.cookies.jwt;
+  }
+
+  if (!token) {
+    return next(
+      new AppError('You are not logged in. Please login to get access.', 404)
+    );
+  }
+
+  // 2.) Verify token
+  const verified = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+
+  // 3.) Check if user still exists
+  const currentUser = await User.findById(verified.id);
+  if (!currentUser) {
+    return next(
+      new AppError('The user belonging to this token does not exist', 401)
+    );
+  }
+
+  // 4.) Check if user changed password after token was generated
+  if (currentUser.changedPasswordAfter(verified.iat)) {
+    return next(
+      new AppError('User recently changed password! Please login again!', 401)
+    );
+  }
+
+  // 5.) GRANT ACCESS TO PROTECTED ROUTE
+  req.user = currentUser;
+  res.locals.user = currentUser;
+  next();
+});
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError(
+          'You do not have the permission to perform this action',
+          403
+        )
+      );
+    }
+
+    next();
+  };
 };

@@ -2,6 +2,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 
 // Requiring files
 const foodRouter = require('./routes/foodRoutes');
@@ -31,6 +32,9 @@ app.use(
     extended: true,
   })
 );
+
+// Using cookieParser
+app.use(cookieParser());
 
 // Test
 app.get('/', (req, res) => {

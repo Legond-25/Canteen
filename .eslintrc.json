@@ -28,6 +28,8 @@
         "no-trailing-spaces": "off",
         "no-unused-vars": "warn",
         "indent":"off",
-        "quotes":"off"
+        "quotes":"off",
+        "operator-linebreak": "off",
+        "prefer-destructuring": "off"
     }
 }
