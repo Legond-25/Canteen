@@ -13,11 +13,9 @@ router.get('/logout', authController.logout);
 router.use(authController.protect);
 
 // Creating User Routes
-router.route('/me/:id').get(userController.getMe);
-router
-  .route('/me/:id')
-  .patch(userController.updateMe)
-  .delete(userController.deleteMe);
+router.get('/getMe', userController.getMe);
+router.patch('/updateMe', userController.updateMe);
+router.delete('/deleteMe', userController.deleteMe);
 
 // All routes below are only for admin
 router.use(authController.restrictTo('admin', 'manager'));

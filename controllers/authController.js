@@ -81,6 +81,7 @@ exports.logout = (req, res) => {
     .json({ status: 'success', message: 'Successfully logged out' });
 };
 
+// To protect routes only for logged in users
 exports.protect = catchAsyncError(async (req, res, next) => {
   // 1.) Get token and check if it exists
   let token;
@@ -123,6 +124,37 @@ exports.protect = catchAsyncError(async (req, res, next) => {
   next();
 });
 
+// Only for rendered pages, there will be no error
+exports.isLoggedIn = async (req, res, next) => {
+  try {
+    if (req.cookies.jwt) {
+      // 1.) Verify token
+      const verified = await promisify(jwt.verify)(
+        req.cookies.jwt,
+        process.env.JWT_SECRET
+      );
+
+      // 2.) Check if user still exists
+      const currentUser = await User.findById(verified.id);
+      if (!currentUser) {
+        return next();
+      }
+
+      // 3.) Check if user changed password after token was generated
+      if (currentUser.changedPasswordAfter(verified.iat)) {
+        return next();
+      }
+
+      // There is a logged in user
+      res.locals.user = currentUser;
+      return next();
+    }
+    next();
+  } catch (err) {
+    next();
+  }
+};
+
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
@@ -137,3 +169,10 @@ exports.restrictTo = (...roles) => {
     next();
   };
 };
+
+// Implementing Forget Password Route - (in progress)
+// exports.forgetPassword = () => {};
+// For sending email use nodemailer sendgrid
+
+// Implementing Reset Password Route - (in progress)
+// exports.resetPassword = () => {};
