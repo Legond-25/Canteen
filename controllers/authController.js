@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const catchAsyncError = require('./../utils/CatchAsync');
 const AppError = require('./../utils/AppError');
+const { getAllUsers } = require('./userController');
 
 const signToken = (user) => {
   return jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
@@ -171,8 +172,82 @@ exports.restrictTo = (...roles) => {
 };
 
 // Implementing Forget Password Route - (in progress)
-// exports.forgetPassword = () => {};
+
+//exports.forgetPassword =async (req,res) => {
+//  let data = await getAllUsers.findOne({email:req.body.email});
+  //const responseType = {}
+
+  //if (data){
+    //let otpcode = Math.floor((Math.random()*100000)+1);
+  //let otpData = new otp({
+    //email:req.body.email,
+    //code:otpcode,
+  //expiresIn: new Date().getTime()+300*1000
+  //})
+
+  //let otpResponse = await otpData.save();
+  //responseType.statusText = 'success'
+  //responseType.statusText = 'Please check your mail id';
+  
+  //}else{
+    //responseType.statusText = 'error'
+  //responseType.statusText = 'invalid mail id';
+ // }
+ // res.status(200).json(responseType)
+//};
+
 // For sending email use nodemailer sendgrid
 
 // Implementing Reset Password Route - (in progress)
-// exports.resetPassword = () => {};
+
+ //exports.resetPassword = async (req,res) => {
+ //  let data = await otp.find({email:req.body.email, code:req.body.email.otpcode});
+ //  const response = {}
+ //  if(data){
+ //    let currentTime = new Date().getTime()
+  //   let diff = data.expiresIn - currentTime
+  //   if(diff<0)
+   //  response.message = 'Token Expire'
+   //  response.statusText = 'success';
+
+  // }
+  // else{
+  //   response.message = 'Invalid otp'
+  //   response.statusText = 'error'
+  // }
+ //  res.status(200).json(responseType)
+// };
+
+ // nodemailer code
+ //const mailer = (email,otp)=>{
+
+ // var nodemailer = require('nodemailer');
+ // const { text } = require('express');
+   //var transporter = nodemailer.createTransport({
+    // service: 'gmail',
+    // port: 587,
+     //secure: false,
+     //auth:{
+     //  user: 'code@gmail.com',
+     //  pass: '9898998 '
+     //}
+  // })
+  //var mailOptions = {
+    // from: 'code@gmail.com',
+    // to: 'ram@gmail.com',
+    // subject: 'sending mail using Node.js',
+    // text :'thank you!'
+  
+  // }
+  
+   //transporter.sendMail(mailOptions, function(error,info){
+   //  if (error){
+    //   console.log(error);
+   //  }else{
+    //   console.log('Email sent:' + info.response)
+    // }
+  // })
+
+
+// }
+

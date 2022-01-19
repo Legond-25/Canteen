@@ -30,5 +30,11 @@ router
   .get(userController.getUser)
   .delete(userController.deleteUser);
 
+  //reset password and forget password
+
+ // router.post('/forgetPassword', userController.emailSend);
+  //router.patch('/resetPassword', userController.changePassword);
+
+
 // Exporting Router
 module.exports = router;

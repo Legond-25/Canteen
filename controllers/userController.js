@@ -129,3 +129,6 @@ exports.deleteMe = catchAsyncError(async (req, res, next) => {
     data: 'none',
   });
 });
+
+
+
