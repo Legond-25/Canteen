@@ -1,8 +1,11 @@
 const express = require('express');
 const foodController = require('./../controllers/foodController');
+const reviewRouter = require('./reviewRoutes');
 
 // Setting Router
 const router = express.Router();
+
+router.use('/:foodId/reviews/', reviewRouter);
 
 // Creating Food Routes
 router

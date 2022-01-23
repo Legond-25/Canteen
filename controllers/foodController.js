@@ -15,6 +15,7 @@ exports.getAllFoods = catchAsyncError(async (req, res, next) => {
   if (!foodData) {
     return next(new AppError('No Food Items', 404));
   }
+
   res.status(200).json({
     status: 'success',
     results: foodData.length,

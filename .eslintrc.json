@@ -30,6 +30,7 @@
         "indent":"off",
         "quotes":"off",
         "operator-linebreak": "off",
-        "prefer-destructuring": "off"
+        "prefer-destructuring": "off",
+        "spaced-comment": "warn"
     }
 }

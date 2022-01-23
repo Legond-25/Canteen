@@ -1,10 +1,15 @@
 const express = require('express');
 const reviewController = require('./../controllers/reviewController');
+const authController = require('./../controllers/authController');
 
 // Setting Router
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
-// Creating Food Routes
+// POST: /foods/64766767f67/reviews/567999797
+// GET: /foods/64766767f67/reviews/567999797
+
+router.use(authController.protect);
+
 router
   .route('/')
   .get(reviewController.getAllReviews)

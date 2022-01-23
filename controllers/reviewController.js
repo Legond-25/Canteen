@@ -21,6 +21,11 @@ exports.getAllReviews = catchAsyncError(async (req, res, next) => {
 
 // Creating A new Food Item ----------> Tested (Working)
 exports.createReview = catchAsyncError(async (req, res, next) => {
+  if (req.params.foodId) {
+    req.body.food = req.params.foodId;
+    req.body.user = req.user._id;
+  }
+
   const newReviewItem = await Review.create(req.body);
 
   res.status(200).json({
