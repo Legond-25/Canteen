@@ -1,0 +1,99 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit; }
+
+html {
+  font-size: 62.5%; }
+
+body {
+  box-sizing: border-box; }
+
+.navigation {
+  height: 100vh;
+  width: 7%;
+  /* background-color: #eee;*/
+  background-image: linear-gradient(to right bottom, #f0ece3, #dfd3c3, #c7b198);
+  position: fixed;
+  transition: all 0.3s;
+  z-index: 1000;
+  opacity: 70%; }
+  .navigation__logo {
+    width: 6rem;
+    height: 6rem;
+    margin: 0 auto;
+    padding: 0.5rem;
+    padding-top: 5rem; }
+  .navigation__name {
+    transform: rotate(-90deg);
+    font-size: 3.5rem;
+    margin-top: 17rem;
+    text-align: center;
+    transition: all 0.3s;
+    color: #495057; }
+  .navigation__feature {
+    position: fixed;
+    bottom: 13rem;
+    /* text-align: center;*/ }
+  .navigation__ulist {
+    list-style: none; }
+    .navigation__ulist--item {
+      /* text-align: center;*/
+      font-size: 1.5rem;
+      padding: 1rem;
+      padding-left: 2rem;
+      margin-top: 1rem;
+      letter-spacing: 0.3rem;
+      transition: all 0.3s ease-out;
+      color: #495057;
+      backface-visibility: hidden; }
+  .navigation__link {
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0rem;
+    color: #495057;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+    width: 0; }
+  .navigation__social {
+    background-color: #c7b198;
+    width: 100%;
+    height: 5rem;
+    position: absolute;
+    bottom: 0;
+    cursor: pointer; }
+  .navigation:hover {
+    width: 14%; }
+    .navigation:hover .img {
+      /* width: 10rem;
+            height: 10rem;*/
+      margin-top: 2.5rem;
+      transform: scale(2); }
+
+.navigation:hover .navigation__link {
+  opacity: 1;
+  width: 100%;
+  font-size: 1.5rem; }
+  .navigation:hover .navigation__link:hover {
+    text-decoration: underline; }
+
+.navigation:hover .navigation__name {
+  transform: rotate(0deg);
+  font-size: 4.5rem; }
+
+.navigation:hover .navigation__ulist--item {
+  transform: translateX(-1rem); }
+  .navigation:hover .navigation__ulist--item:hover {
+    transform: scale(1.05); }
+
+.img {
+  /* background-color: #6d747a;*/
+  background-color: #c7b198;
+  border-radius: 50%;
+  width: 6rem;
+  height: 6rem;
+  margin: 0 auto;
+  transition: all 0.3s ease-out;
+  backface-visibility: hidden; }
