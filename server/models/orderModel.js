@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const ordereSchema = new mongoose.Schema({
-  Quantity: {
+  quantity: {
     type: Number,
     required: [true, "please specify the quantity"],
     trim: true,
   },
-  TotalPrice: {
+  totalPrice: {
     type: Number,
   },
   complete: {
