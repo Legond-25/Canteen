@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const paymentSchema = new mongoose.Schema({
-  Amount: {
+  amount: {
     type: Number,
     required: [true],
   },
-  Recipient: {
+  recipient: {
     type: String,
   },
   status: {
@@ -14,20 +14,20 @@ const paymentSchema = new mongoose.Schema({
   paymentMethodname: {
     type: String,
   },
-  StatusText: {
-      type: String,
+  statusText: {
+    type: String,
   },
-  Currency: {
-     type: String,
+  currency: {
+    type: String,
   },
-  CreatedAt: {
+  createdAt: {
     type: Number,
   },
-  UpdatedAt: {
-      type: Number,
+  updatedAt: {
+    type: Number,
   },
-  Creator: {
-      type: String,
+  creator: {
+    type: String,
   },
 });
 
