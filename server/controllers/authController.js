@@ -1,9 +1,10 @@
-const { promisify } = require('util');
-const jwt = require('jsonwebtoken');
-const User = require('./../models/userModel');
-const catchAsyncError = require('./../utils/CatchAsync');
-const AppError = require('./../utils/AppError');
-const { getAllUsers } = require('./userController');
+const { promisify } = require("util");
+const jwt = require("jsonwebtoken");
+const User = require("./../models/userModel");
+const catchAsyncError = require("./../utils/CatchAsync");
+const AppError = require("./../utils/AppError");
+const { getAllUsers } = require("./userController");
+const sendEmail = require("./../utils/sendEmail");
 
 const signToken = (user) => {
   return jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
@@ -21,10 +22,10 @@ const createSendToken = (user, statusCode, req, res) => {
     ),
   };
 
-  res.cookie('jwt', token, cookieOptions);
+  res.cookie("jwt", token, cookieOptions);
 
   res.status(statusCode).json({
-    status: 'success',
+    status: "success",
     token,
     data: {
       user,
@@ -56,15 +57,15 @@ exports.login = catchAsyncError(async (req, res, next) => {
 
   // 2.) Check if email and password exist
   if (!email || !password) {
-    return next(new AppError('Please provide email and password', 400));
+    return next(new AppError("Please provide email and password", 400));
   }
 
   // 3.) Check if user exists and password is correct or not
-  const user = await User.findOne({ email }).select('+password');
+  const user = await User.findOne({ email }).select("+password");
   const checkPass = await user.comparePassword(password, user.password);
 
   if (!user || !checkPass) {
-    return next(new AppError('Incorrect Email or Password', 401));
+    return next(new AppError("Incorrect Email or Password", 401));
   }
 
   // 4.) Send JSON token back to client
@@ -72,14 +73,14 @@ exports.login = catchAsyncError(async (req, res, next) => {
 });
 
 exports.logout = (req, res) => {
-  res.cookie('jwt', 'loggedout', {
+  res.cookie("jwt", "loggedout", {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
 
   res
     .status(200)
-    .json({ status: 'success', message: 'Successfully logged out' });
+    .json({ status: "success", message: "Successfully logged out" });
 };
 
 // To protect routes only for logged in users
@@ -88,16 +89,16 @@ exports.protect = catchAsyncError(async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
+    req.headers.authorization.startsWith("Bearer")
   ) {
-    token = req.headers.authorization.split(' ')[1];
+    token = req.headers.authorization.split(" ")[1];
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
 
   if (!token) {
     return next(
-      new AppError('You are not logged in. Please login to get access.', 404)
+      new AppError("You are not logged in. Please login to get access.", 404)
     );
   }
 
@@ -108,14 +109,14 @@ exports.protect = catchAsyncError(async (req, res, next) => {
   const currentUser = await User.findById(verified.id);
   if (!currentUser) {
     return next(
-      new AppError('The user belonging to this token does not exist', 401)
+      new AppError("The user belonging to this token does not exist", 401)
     );
   }
 
   // 4.) Check if user changed password after token was generated
   if (currentUser.changedPasswordAfter(verified.iat)) {
     return next(
-      new AppError('User recently changed password! Please login again!', 401)
+      new AppError("User recently changed password! Please login again!", 401)
     );
   }
 
@@ -161,7 +162,7 @@ exports.restrictTo = (...roles) => {
     if (!roles.includes(req.user.role)) {
       return next(
         new AppError(
-          'You do not have the permission to perform this action',
+          "You do not have the permission to perform this action",
           403
         )
       );
@@ -171,81 +172,73 @@ exports.restrictTo = (...roles) => {
   };
 };
 
-// Implementing Forget Password Route - (in progress)
+// Forgot Password
+exports.forgotPassword = catchAsyncError(async (req, res, next) => {
+  const user = await User.findOne({ email: req.body.email });
 
-//exports.forgetPassword =async (req,res) => {
-//  let data = await getAllUsers.findOne({email:req.body.email});
-//const responseType = {}
+  if (!user) {
+    return next(new AppError("User not found", 404));
+  }
 
-//if (data){
-//let otpcode = Math.floor((Math.random()*100000)+1);
-//let otpData = new otp({
-//email:req.body.email,
-//code:otpcode,
-//expiresIn: new Date().getTime()+300*1000
-//})
+  // Get ResetPassword Token
+  const resetToken = user.getResetPasswordToken();
 
-//let otpResponse = await otpData.save();
-//responseType.statusText = 'success'
-//responseType.statusText = 'Please check your mail id';
+  await user.save({ validateBeforeSave: false });
 
-//}else{
-//responseType.statusText = 'error'
-//responseType.statusText = 'invalid mail id';
-// }
-// res.status(200).json(responseType)
-//};
+  const resetPasswordUrl = `${req.protocol}://${req.get(
+    "host"
+  )}/users/password/reset/${resetToken}`;
+  console.log(resetPasswordUrl);
+  const message = `Your password reset token is :- \n\n ${resetPasswordUrl} \n\nIf you have not requested this email then, please ignore it.`;
 
-// For sending email use nodemailer sendgrid
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: `Password Recovery`,
+      message,
+    });
+    res.status(200).json({
+      success: true,
+      message: `Email sent to ${user.email} successfully`,
+    });
+  } catch (error) {
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
 
-// Implementing Reset Password Route - (in progress)
+    await user.save({ validateBeforeSave: false });
 
-//exports.resetPassword = async (req,res) => {
-//  let data = await otp.find({email:req.body.email, code:req.body.email.otpcode});
-//  const response = {}
-//  if(data){
-//    let currentTime = new Date().getTime()
-//   let diff = data.expiresIn - currentTime
-//   if(diff<0)
-//  response.message = 'Token Expire'
-//  response.statusText = 'success';
+    return next(new AppError(error.message, 500));
+  }
+});
 
-// }
-// else{
-//   response.message = 'Invalid otp'
-//   response.statusText = 'error'
-// }
-//  res.status(200).json(responseType)
-// };
+// Reset Password
+exports.resetPassword = catchAsyncError(async (req, res, next) => {
+  // creating token hash
+  const passwordResetToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
 
-// nodemailer code
-//const mailer = (email,otp)=>{
+  const user = await User.findOne({
+    passwordResetToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
 
-// var nodemailer = require('nodemailer');
-// const { text } = require('express');
-//var transporter = nodemailer.createTransport({
-// service: 'gmail',
-// port: 587,
-//secure: false,
-//auth:{
-//  user: 'code@gmail.com',
-//  pass: '9898998 '
-//}
-// })
-//var mailOptions = {
-// from: 'code@gmail.com',
-// to: 'ram@gmail.com',
-// subject: 'sending mail using Node.js',
-// text :'thank you!'
+  if (!user) {
+    return next(
+      new AppError("Reset Password Token is invalid or has been expired", 400)
+    );
+  }
 
-// }
+  if (req.body.password !== req.body.confirmPassword) {
+    return next(new AppError("Password does not match", 400));
+  }
 
-//transporter.sendMail(mailOptions, function(error,info){
-//  if (error){
-//   console.log(error);
-//  }else{
-//   console.log('Email sent:' + info.response)
-// }
-// })
+  user.password = req.body.password;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
 
-// }
+  await user.save();
+
+  sendToken(user, 200, res);
+});

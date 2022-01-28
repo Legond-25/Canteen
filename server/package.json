@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/Legond-25/Canteen#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.6",
     "dotenv": "^10.0.0",
