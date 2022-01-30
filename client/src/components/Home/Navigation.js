@@ -3,7 +3,7 @@ const Navigation = () => {
     <>
       <nav className="navigation">
         <div className="navigation__logo">
-          <div className="img" alt="logo"></div>
+          <div className="navigation__img" alt="logo"></div>
         </div>
 
         <div className="navigation__name">Canteen</div>
