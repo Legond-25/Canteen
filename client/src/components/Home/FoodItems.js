@@ -1,13 +1,13 @@
-function FoodItems() {
-  return (
-    <div className="wrapper">
-      <Card img="" title="Vada-Pav" description="" amount="" />
+//function FoodItems() {
+//  return (
+  //  <div className="wrapper">
+   //   <Card img="" title="Vada-Pav" description="" amount="" />
 
-      <Card img="" title="Samosa" description="" amount="" />
+    //  <Card img="" title="Samosa" description="" amount="" />
 
-      <Card img="" title="Thali" description="" amount="" />
-    </div>
-  );
-}
+     // <Card img="" title="Thali" description="" amount="" />
+   // </div>
+// );
+//}
 
-export default FoodItems;
+//export default FoodItems;

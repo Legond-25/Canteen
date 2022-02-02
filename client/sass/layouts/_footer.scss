@@ -1,0 +1,50 @@
+ /* footer components css applied*/
+
+ .main-footer{
+    color:black;
+    background-color: blanchedalmond;
+    padding-top: 3em;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+.col-sm{
+  text-align: center;
+
+
+}
+
+/* css of footer for shifting the footer content to bottom*/
+
+ .page-container{
+   display: flex;
+   flex-direction: column;
+   min-height: 90vh;
+ }
+ .content-wrap{
+   flex:1;
+ }
+ .col{
+     font-size:medium;
+     text-align: center;
+ }
+ /* social media icons*/
+.social-container{
+   background: white;
+   padding: 25px 50px;
+ }
+ a.social {
+   margin: 0 1rem;
+   transition: transform 250ms;
+ }
+ a.social:hover{
+transform: translateY();
+ }
+
+a.facebook{
+  color: #4968ad;
+}
+a.twitter{
+  color: #49a1eb;
+}
+
