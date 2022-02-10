@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./../models/userModel');
 const catchAsyncError = require('./../utils/CatchAsync');
 const AppError = require('./../utils/AppError');
-const sendEmail = require('./../utils/SendEmail');
+const sendEmail = require('./../utils/sendEmail');
 
 const signToken = (user) => {
   return jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
@@ -223,7 +223,7 @@ exports.resetPassword = catchAsyncError(async (req, res, next) => {
   const user = await User.findOne({
     passwordResetToken,
     passwordResetExpires: { $gt: Date.now() },
-  });
+  }).select('-name');
 
   // 2.) If token has not expired set new password
   if (!user) {
