@@ -19,7 +19,7 @@ const Login = () => {
           <div class="pass">Forgot Password?</div>
           <input type="submit" value="Login" />
           <div class="signup_link">
-            Not a member? <a href="#">Signup</a>
+            Not a member? <a href=" http://localhost:3000/registration  ">Signup</a>
           </div>
         </form>
       </div>
