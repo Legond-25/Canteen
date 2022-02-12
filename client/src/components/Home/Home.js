@@ -4,13 +4,19 @@ import Footer from "./Footer";
 
 function Home() {
   return( 
+   
   <div className="page-container">
   <div className="content-wrap">
+ 
+  <Navigation />;
+   
     
   </div>
-   <Navigation />;
-  <Footer />;
+ 
+
+  <Footer />
   </div>
+
 )
 }
 export default Home;
