@@ -1,16 +1,13 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
   amount: {
     type: Number,
-    required: [true, "Please enter a Valid Amount"],
-    validate: [validator.isNumeric, "Please enter a number"],
+    required: [true, 'Please enter a Valid Amount'],
   },
   recipient: {
     type: String,
-    required: [true, "Please enter valid recipient name"],
-    validate: [validator.isAlpha, "Please provide a valid name"],
+    required: [true, 'Please enter valid recipient name'],
   },
   status: {
     type: Boolean,
@@ -35,6 +32,6 @@ const paymentSchema = new mongoose.Schema({
   },
 });
 
-const Payment = mongoose.model("Payment", paymentSchema);
+const Payment = mongoose.model('Payment', paymentSchema);
 
 module.exports = Payment;

@@ -1,34 +1,31 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+const mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema(
   {
     review: {
-      type: "String",
+      type: 'String',
       trim: true,
-      required: [true, "Review cannot not be empty"],
-      validate: [validator.isAlphanumeric],
+      required: [true, 'Review cannot not be empty'],
     },
     rating: {
       type: Number,
-      min: [1, "The rating must be above 1.0"],
-      max: [5, "The rating must be below 5.0"],
-      validate: [validator.isNumeric, "Please enter a number"],
+      min: [1, 'The rating must be above 1.0'],
+      max: [5, 'The rating must be below 5.0'],
     },
     type: {
       type: String,
-      required: [true, "The type of the review is required"],
-      enum: ["food", "app"],
+      required: [true, 'The type of the review is required'],
+      enum: ['food', 'app'],
     },
     food: {
       type: mongoose.Schema.ObjectId,
-      ref: "Food",
-      required: [true, "Review must belong to a Food"],
+      ref: 'Food',
+      required: [true, 'Review must belong to a Food'],
     },
     user: {
       type: mongoose.Schema.ObjectId,
-      ref: "User",
-      required: [true, "Review must belong to a User"],
+      ref: 'User',
+      required: [true, 'Review must belong to a User'],
     },
   },
   {
@@ -37,19 +34,23 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
+reviewSchema.index(
+  { food: 1, user: 1 },
+  {
+    unique: true,
+  }
+);
+
 // Query Middleware
 reviewSchema.pre(/^find/, function (next) {
   this.populate({
-    path: "food",
-    select: "name price",
-  }).populate({
-    path: "user",
-    select: "name photo",
+    path: 'user',
+    select: 'name photo',
   });
 
   next();
 });
 
-const Review = mongoose.model("Review", reviewSchema);
+const Review = mongoose.model('Review', reviewSchema);
 
 module.exports = Review;

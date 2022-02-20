@@ -1,22 +1,40 @@
 const express = require('express');
 const foodController = require('./../controllers/foodController');
+const authController = require('./../controllers/authController');
 const reviewRouter = require('./reviewRoutes');
 
 // Setting Router
 const router = express.Router();
 
-router.use('/:foodId/reviews/', reviewRouter);
+router.use(
+  '/:foodId/reviews/',
+  authController.protect,
+  authController.restrictTo('user'),
+  reviewRouter
+);
 
 // Creating Food Routes
 router
   .route('/')
   .get(foodController.getAllFoods)
-  .post(foodController.createFood);
+  .post(
+    authController.protect,
+    authController.restrictTo('admin', 'manager'),
+    foodController.createFood
+  );
 router
   .route('/:id')
-  .patch(foodController.updateFood)
   .get(foodController.getFood)
-  .delete(foodController.deleteFood);
+  .patch(
+    authController.protect,
+    authController.restrictTo('admin', 'manager'),
+    foodController.updateFood
+  )
+  .delete(
+    authController.protect,
+    authController.restrictTo('admin', 'manager'),
+    foodController.deleteFood
+  );
 
 // Exporting Router
 module.exports = router;

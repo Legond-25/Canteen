@@ -28,6 +28,10 @@ exports.createReview = catchAsyncError(async (req, res, next) => {
 
   const newReviewItem = await Review.create(req.body);
 
+  if (!newReviewItem) {
+    return next(new AppError('Error creating Review. Please try again!'));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {

@@ -1,17 +1,17 @@
-const Order = require("../models/orderModel");
-const catchAsyncError = require("./../utils/CatchAsync");
-const AppError = require("./../utils/AppError");
+const Order = require('../models/orderModel');
+const catchAsyncError = require('./../utils/CatchAsync');
+const AppError = require('./../utils/AppError');
 
-//Getting all orders
+// Getting all orders
 exports.getAllOrders = catchAsyncError(async (req, res, next) => {
   const orderData = await Order.find();
 
   if (!orderData) {
-    return next(new AppError("No Order Items", 404));
+    return next(new AppError('No Order Items', 404));
   }
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     results: orderData.length,
     data: {
       data: orderData,
@@ -29,7 +29,7 @@ exports.createOrder = catchAsyncError(async (req, res, next) => {
   const newOrderItem = await Order.create(req.body);
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: {
       data: newOrderItem,
     },
@@ -41,11 +41,11 @@ exports.getOrder = catchAsyncError(async (req, res, next) => {
   const searchedOrder = await Order.findById({ _id: req.params.id });
 
   if (!searchedOrder) {
-    return next(new AppError(" Order not Found", 404));
+    return next(new AppError(' Order not Found', 404));
   }
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: {
       data: searchedOrder,
     },
@@ -60,11 +60,11 @@ exports.updateOrder = catchAsyncError(async (req, res, next) => {
   });
 
   if (!updateOrder) {
-    return next(new AppError("Order Not Found", 404));
+    return next(new AppError('Order Not Found', 404));
   }
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: {
       data: updateOrder,
     },
@@ -76,10 +76,10 @@ exports.deleteOrder = catchAsyncError(async (req, res, next) => {
   const deleteOrder = await Order.findByIdAndDelete(req.params.id);
 
   if (!deleteOrder) {
-    return next(new AppError("Order Not Found", 404));
+    return next(new AppError('Order Not Found', 404));
   }
   res.status(200).json({
-    status: "success",
-    data: "none",
+    status: 'success',
+    data: 'none',
   });
 });

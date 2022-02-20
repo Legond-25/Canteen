@@ -2,39 +2,44 @@ const dotenv = require('dotenv');
 const sgMail = require('@sendgrid/mail');
 
 dotenv.config({ path: './.env' });
+class SendEmail {
+  constructor(user, url, message) {
+    this.to = user.email;
+    this.firstName = user.name.split(' ')[0];
+    this.url = url;
+    this.message = message;
+    this.from = `Canteen <${process.env.EMAIL}>`;
+  }
 
-const sgMailApiKey = process.env.SENDGRID_API_KEY;
-sgMail.setApiKey(sgMailApiKey);
+  setApiKey() {
+    const sgMailApiKey = process.env.SENDGRID_API_KEY;
+    return sgMail.setApiKey(sgMailApiKey);
+  }
 
-const sendEmail = async (options) => {
-  sgMail
-    .send({
+  async send(template, subject) {
+    const mailOptions = {
       from: process.env.EMAIL,
-      to: options.email,
-      subject: options.subject,
-      text: options.message,
-    })
-    .then(
-      () => {
-        console.log('Email Sent successfully');
-      },
-      (error) => {
-        console.error(error);
+      to: this.to,
+      subject: subject,
+      text: this.message,
+    };
 
-        if (error.response) {
-          console.error(error.response.body);
-        }
-      }
+    await this.setApiKey()
+      .send(mailOptions)
+      .then(() => console.log('Email sent successfully'))
+      .catch((err) => console.log(err));
+  }
+
+  async sendWelcome() {
+    await this.send('welcome', 'Welcome to Canteen!');
+  }
+
+  async sendPasswordReset() {
+    await this.send(
+      'passwordReset',
+      'Your password reset token (valid for only 10 mins).'
     );
-};
+  }
+}
 
-// class Email {
-//   constructor(user, url) {
-//     this.to = user.email;
-//     this.firstName = user.name.split(' ')[0];
-//     this.url = url;
-//     // this.from = `Canteen <${process.env.}>`
-//   }
-// }
-
-module.exports = sendEmail;
+module.exports = SendEmail;

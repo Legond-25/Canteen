@@ -2,7 +2,7 @@ const Payment = require('../models/paymentModel');
 const catchAsyncError = require('./../utils/CatchAsync');
 const AppError = require('./../utils/AppError');
 
-//Getting all payments
+// Getting all payments
 exports.getAllPayments = catchAsyncError(async (req, res, next) => {
   const paymentData = await Payment.find();
 
@@ -23,8 +23,8 @@ exports.getAllPayments = catchAsyncError(async (req, res, next) => {
 exports.createPayment = catchAsyncError(async (req, res, next) => {
   if (req.params.paymentId) {
     req.body.payment = req.params.paymentId;
-   // req.body.user = req.user._id;
- }
+    // req.body.user = req.user._id;
+  }
 
   const newPaymentItem = await Payment.create(req.body);
 
@@ -34,7 +34,7 @@ exports.createPayment = catchAsyncError(async (req, res, next) => {
       data: newPaymentItem,
     },
   });
-});  
+});
 
 // Getting a Payment
 exports.getPayment = catchAsyncError(async (req, res, next) => {
@@ -54,10 +54,14 @@ exports.getPayment = catchAsyncError(async (req, res, next) => {
 
 // Updating the particular payment
 exports.updatePayment = catchAsyncError(async (req, res, next) => {
-  const updatePayment = await Payment.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const updatePayment = await Payment.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   if (!updatePayment) {
     return next(new AppError('Order Not Found', 404));
