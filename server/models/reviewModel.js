@@ -34,12 +34,7 @@ const reviewSchema = new mongoose.Schema(
   }
 );
 
-reviewSchema.index(
-  { food: 1, user: 1 },
-  {
-    unique: true,
-  }
-);
+reviewSchema.index({ food: 1, user: 1 });
 
 // Query Middleware
 reviewSchema.pre(/^find/, function (next) {
