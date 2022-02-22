@@ -1,22 +1,21 @@
-import React from "react";
-import Navigation from "./Navigation";
-import Footer from "./Footer";
+import { useEffect } from 'react';
+import Navigation from './Navigation';
+import Footer from './Footer';
 
 function Home() {
-  return( 
-   
-  <div className="page-container">
-  <div className="content-wrap">
- 
-  <Navigation />;
-   
-    
-  </div>
- 
+  const doPayment = (props) => {};
 
-  <Footer />
-  </div>
+  return (
+    <div className="page-container">
+      <div className="content-wrap">
+        <Navigation />
+        <button className="btn" onClick={doPayment}>
+          Pay Now
+        </button>
+      </div>
 
-)
+      <Footer />
+    </div>
+  );
 }
 export default Home;

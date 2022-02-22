@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const uniqid = require('uniqid');
 
 const orderSchema = new mongoose.Schema({
   id: String,
@@ -30,15 +29,7 @@ const orderSchema = new mongoose.Schema({
   },
   attempts: Number,
   notes: Object,
-  created_at: {
-    type: Date,
-    default: Date.now(),
-  },
-});
-
-orderSchema.pre('save', function (next) {
-  this.receipt = uniqid();
-  next();
+  created_at: Number,
 });
 
 const Order = mongoose.model('Order', orderSchema);

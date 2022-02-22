@@ -105,3 +105,17 @@
     backface-visibility: hidden;
   }
 }
+
+// Testing
+.btn {
+  font-size: 1.5rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.8rem 1.2rem;
+  background-color: #fff;
+  border: none;
+  margin: 1rem 2rem;
+  border-radius: 200px;
+  cursor: pointer;
+}

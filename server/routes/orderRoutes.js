@@ -11,11 +11,9 @@ router
   .route('/')
   .get(orderController.getAllOrders)
   .post(orderController.createOrder);
-router
-  .route('/:id')
-  .patch(orderController.updateOrder)
-  .get(orderController.getOrder)
-  .delete(orderController.deleteOrder);
+
+router.get('/:id', orderController.getOrder);
+router.get('/:id/payments', orderController.getPaymentForOrder);
 
 // Exporting Router
 module.exports = router;

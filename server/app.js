@@ -3,6 +3,7 @@ const express = require('express');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 // Requiring files
 const foodRouter = require('./routes/foodRoutes');
@@ -19,7 +20,8 @@ const app = express();
 // Dotenv config path
 dotenv.config({ path: './.env' });
 
-// console.log(`${process.env.NODE_ENV}`);
+// Implement cors
+app.use(cors());
 
 // Development logging
 if (process.env.NODE_ENV === 'development') {

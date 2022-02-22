@@ -132,28 +132,17 @@ a.twitter {
     transition: all 0.3s ease-out;
     backface-visibility: hidden; }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif; }
-
-body {
-  margin: 0;
-  padding: 0;
-  background: linear-gradient(120deg, #2980b9, #8e44ad);
-  height: 100vh;
-  overflow: hidden; }
-
-.center {
+.btn {
+  font-size: 1.5rem;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 400px;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05); }
+  top: 0;
+  right: 0;
+  padding: 0.8rem 1.2rem;
+  background-color: #fff;
+  border: none;
+  margin: 1rem 2rem;
+  border-radius: 200px;
+  cursor: pointer; }
 
 * {
   margin: 0;
@@ -268,5 +257,28 @@ input[type="submit"]:hover {
   text-decoration: underline; }
 
 .pass {
-  font-size: medium;
+  font-size: small;
   color: black; }
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif; }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(120deg, #2980b9, #8e44ad);
+  height: 100vh;
+  overflow: hidden; }
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.05); }
