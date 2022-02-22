@@ -1,19 +1,46 @@
 const mongoose = require('mongoose');
+const uniqid = require('uniqid');
 
-const ordereSchema = new mongoose.Schema({
-  quantity: {
+const orderSchema = new mongoose.Schema({
+  id: String,
+  amount: {
+    // in Paise
     type: Number,
-    required: [true, 'please specify the quantity'],
-    trim: true,
+    set: (val) => {
+      return val * 100;
+    },
   },
-  totalPrice: {
-    type: Number,
+  currency: {
+    type: String,
+    enum: {
+      values: ['INR'],
+      message: 'Only INR currency accepted',
+    },
   },
-  complete: {
-    type: Boolean,
+  receipt: {
+    type: String,
+    maxlength: 40,
+  },
+  status: {
+    type: String,
+    enum: {
+      values: ['created', 'attempted', 'paid'],
+      message: 'Order status can only be created, attempted or paid',
+    },
+  },
+  attempts: Number,
+  notes: Object,
+  created_at: {
+    type: Date,
+    default: Date.now(),
   },
 });
 
-const Order = mongoose.model('Order', ordereSchema);
+orderSchema.pre('save', function (next) {
+  this.receipt = uniqid();
+  next();
+});
+
+const Order = mongoose.model('Order', orderSchema);
 
 module.exports = Order;

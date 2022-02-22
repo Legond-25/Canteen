@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const foodRouter = require('./routes/foodRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
-const cartRouter = require('./routes/cartRoutes');
+const orderRouter = require('./routes/orderRoutes');
 
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -48,7 +48,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1/foods', foodRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
-app.use('/api/v1/carts', cartRouter);
+app.use('/api/v1/orders', orderRouter);
 
 // Not defined Routes
 app.all('*', (req, res, next) => {

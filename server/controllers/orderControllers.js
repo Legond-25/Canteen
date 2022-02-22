@@ -1,6 +1,18 @@
+const Razorpay = require('razorpay');
+const dotenv = require('dotenv');
+
 const Order = require('../models/orderModel');
 const catchAsyncError = require('./../utils/CatchAsync');
 const AppError = require('./../utils/AppError');
+
+// Dotenv config
+dotenv.config({ path: './../.env' });
+
+// Razorpay initialize
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 
 // Getting all orders
 exports.getAllOrders = catchAsyncError(async (req, res, next) => {
@@ -21,18 +33,31 @@ exports.getAllOrders = catchAsyncError(async (req, res, next) => {
 
 // Creating A new Order
 exports.createOrder = catchAsyncError(async (req, res, next) => {
-  if (req.params.orderId) {
-    req.body.order = req.params.orderId;
-    // req.body.user = req.user._id;
+  const options = req.body;
+
+  if (!options) {
+    return next(new AppError('Please provide the required data', 422));
   }
 
-  const newOrderItem = await Order.create(req.body);
+  await razorpay.orders.create(options, async (err, order) => {
+    try {
+      if (err) {
+        console.log(err);
+        return next(new AppError(err.error.description, err.statusCode));
+      }
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      data: newOrderItem,
-    },
+      const newOrderItem = await Order.create(order);
+
+      res.status(200).json({
+        status: 'success',
+        data: {
+          data: newOrderItem,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+      return next(new AppError(error.message, 404));
+    }
   });
 });
 
@@ -41,7 +66,7 @@ exports.getOrder = catchAsyncError(async (req, res, next) => {
   const searchedOrder = await Order.findById({ _id: req.params.id });
 
   if (!searchedOrder) {
-    return next(new AppError(' Order not Found', 404));
+    return next(new AppError('Order not Found', 404));
   }
 
   res.status(200).json({
