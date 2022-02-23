@@ -43,7 +43,6 @@ exports.createOrder = catchAsyncError(async (req, res, next) => {
   await razorpay.orders.create(options, async (err, order) => {
     try {
       if (err) {
-        console.log(err);
         return next(new AppError(err.error.description, err.statusCode));
       }
 
@@ -51,12 +50,9 @@ exports.createOrder = catchAsyncError(async (req, res, next) => {
 
       res.status(200).json({
         status: 'success',
-        data: {
-          data: newOrderItem,
-        },
+        data: newOrderItem,
       });
     } catch (error) {
-      console.log(error);
       return next(new AppError(error.message, 404));
     }
   });

@@ -1,11 +1,11 @@
 const express = require('express');
 const orderController = require('./../controllers/orderControllers');
-const authController = require('./../controllers/authController');
+// const authController = require('./../controllers/authController');
 
 // Setting Router
 const router = express.Router();
 
-router.use(authController.protect);
+// router.use(authController.protect);
 
 router
   .route('/')

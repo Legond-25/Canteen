@@ -2,8 +2,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
-const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 // Requiring files
 const foodRouter = require('./routes/foodRoutes');
