@@ -10,6 +10,7 @@ const foodRouter = require('./routes/foodRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const orderRouter = require('./routes/orderRoutes');
+const paymentRouter = require('./routes/paymentRoutes');
 
 const AppError = require('./utils/AppError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -51,6 +52,7 @@ app.use('/api/v1/foods', foodRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/orders', orderRouter);
+app.use('/api/v1/payments', paymentRouter);
 
 // Not defined Routes
 app.all('*', (req, res, next) => {

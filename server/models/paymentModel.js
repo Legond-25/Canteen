@@ -1,18 +1,10 @@
 const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
-  id: {
-    type: 'String',
-  },
-  entity: {
-    type: String,
-  },
-  amount: {
-    type: String,
-  },
-  currency: {
-    type: String,
-  },
+  id: String,
+  entity: String,
+  amount: String,
+  currency: String,
   status: {
     type: String,
     enum: {
@@ -27,12 +19,8 @@ const paymentSchema = new mongoose.Schema({
       message: 'Invalid method',
     },
   },
-  order_id: {
-    type: String,
-  },
-  description: {
-    type: String,
-  },
+  order_id: String,
+  description: String,
   refund_status: {
     type: String,
     enum: {
@@ -40,27 +28,14 @@ const paymentSchema = new mongoose.Schema({
       message: 'Invalid refund status',
     },
   },
-  amount_refunded: {
-    type: Number,
-  },
-  captured: {
-    type: Boolean,
-  },
-  email: {
-    type: String,
-  },
-  contact: {
-    type: String,
-  },
-  fee: {
-    type: Number,
-  },
-  tax: {
-    type: Number,
-  },
-  created_at: {
-    type: Number,
-  },
+  amount_refunded: Number,
+  invoice_id: String,
+  captured: Boolean,
+  email: String,
+  contact: String,
+  fee: Number,
+  tax: Number,
+  created_at: Number,
 });
 
 const Payment = mongoose.model('Payment', paymentSchema);
