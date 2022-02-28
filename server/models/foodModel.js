@@ -39,7 +39,7 @@ const foodSchema = new mongoose.Schema(
     },
     quantity: {
       type: Number,
-      required: [true, 'Please enter Quantity of Food'],
+      required: [true, 'Please enter quantity of food'],
     },
     priceDiscount: {
       type: Number,

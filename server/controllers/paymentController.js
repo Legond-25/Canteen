@@ -31,7 +31,7 @@ exports.getAllPayments = catchAsyncError(async (req, res, next) => {
 
 // Getting a payment
 exports.getPayment = catchAsyncError(async (req, res, next) => {
-  const payment = await razorpay.payments.fetch(req.body.razorpay_payment_id);
+  const payment = await razorpay.payments.fetch(req.params.id);
 
   if (!payment) {
     return next(new AppError('Payment not Found', 404));
