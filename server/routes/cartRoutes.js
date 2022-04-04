@@ -1,19 +1,20 @@
 const express = require('express');
 const cartController = require('./../controllers/cartController');
+const authController = require('./../controllers/authController');
 
-// Setting Router
 const router = express.Router();
 
-// Creating Food Routes
+router.use(authController.protect);
+
 router
   .route('/')
   .get(cartController.getAllCarts)
   .post(cartController.createCart);
+
 router
   .route('/:id')
-  .patch(cartController.updateCart)
   .get(cartController.getCart)
+  .patch(cartController.updateCart)
   .delete(cartController.deleteCart);
 
-// Exporting Router
 module.exports = router;

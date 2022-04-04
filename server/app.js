@@ -2,12 +2,15 @@
 const express = require('express');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
 // Requiring files
 const foodRouter = require('./routes/foodRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const orderRouter = require('./routes/orderRoutes');
+const paymentRouter = require('./routes/paymentRoutes');
 const cartRouter = require('./routes/cartRoutes');
 
 const AppError = require('./utils/AppError');
@@ -19,7 +22,8 @@ const app = express();
 // Dotenv config path
 dotenv.config({ path: './.env' });
 
-// console.log(`${process.env.NODE_ENV}`);
+// Implement cors
+app.use(cors());
 
 // Development logging
 if (process.env.NODE_ENV === 'development') {
@@ -48,6 +52,8 @@ app.get('/', (req, res) => {
 app.use('/api/v1/foods', foodRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/orders', orderRouter);
+app.use('/api/v1/payments', paymentRouter);
 app.use('/api/v1/carts', cartRouter);
 
 // Not defined Routes

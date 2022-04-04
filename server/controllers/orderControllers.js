@@ -1,18 +1,30 @@
-const Order = require("../models/orderModel");
-const catchAsyncError = require("./../utils/CatchAsync");
-const AppError = require("./../utils/AppError");
+const Razorpay = require('razorpay');
+const dotenv = require('dotenv');
+const uniqid = require('uniqid');
 
-//Getting all orders
+const Order = require('../models/orderModel');
+const catchAsyncError = require('./../utils/CatchAsync');
+const AppError = require('./../utils/AppError');
+
+// Dotenv config
+dotenv.config({ path: './../.env' });
+
+// Razorpay initialize
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
+
+// Getting all orders
 exports.getAllOrders = catchAsyncError(async (req, res, next) => {
-  const orderData = await Order.find();
+  const orderData = await razorpay.orders.all(req.query);
 
   if (!orderData) {
-    return next(new AppError("No Order Items", 404));
+    return next(new AppError('No Order Items', 404));
   }
 
   res.status(200).json({
-    status: "success",
-    results: orderData.length,
+    status: 'success',
     data: {
       data: orderData,
     },
@@ -21,65 +33,59 @@ exports.getAllOrders = catchAsyncError(async (req, res, next) => {
 
 // Creating A new Order
 exports.createOrder = catchAsyncError(async (req, res, next) => {
-  if (req.params.orderId) {
-    req.body.order = req.params.orderId;
-    // req.body.user = req.user._id;
+  const options = req.body;
+  req.body.receipt = uniqid();
+
+  if (!options) {
+    return next(new AppError('Please provide the required data', 422));
   }
 
-  const newOrderItem = await Order.create(req.body);
+  await razorpay.orders.create(options, async (err, order) => {
+    try {
+      if (err) {
+        return next(new AppError(err.error.description, err.statusCode));
+      }
 
-  res.status(200).json({
-    status: "success",
-    data: {
-      data: newOrderItem,
-    },
+      const newOrderItem = await Order.create(order);
+
+      res.status(200).json({
+        status: 'success',
+        data: newOrderItem,
+      });
+    } catch (error) {
+      return next(new AppError(error.message, 404));
+    }
   });
 });
 
 // Getting a Order
 exports.getOrder = catchAsyncError(async (req, res, next) => {
-  const searchedOrder = await Order.findById({ _id: req.params.id });
+  const order = await razorpay.orders.fetch(req.params.id);
 
-  if (!searchedOrder) {
-    return next(new AppError(" Order not Found", 404));
+  if (!order) {
+    return next(new AppError('Order not Found', 404));
   }
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: {
-      data: searchedOrder,
+      data: order,
     },
   });
 });
 
-// Updating the particular order
-exports.updateOrder = catchAsyncError(async (req, res, next) => {
-  const updateOrder = await Order.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+// Getting Payments for an Order
+exports.getPaymentForOrder = catchAsyncError(async (req, res, next) => {
+  const payments = await razorpay.orders.fetchPayments(req.params.id);
 
-  if (!updateOrder) {
-    return next(new AppError("Order Not Found", 404));
+  if (!payments) {
+    return next(new AppError('error', 404));
   }
 
   res.status(200).json({
-    status: "success",
+    status: 'success',
     data: {
-      data: updateOrder,
+      data: payments,
     },
-  });
-});
-
-// Deleting the particular food item from DB ----------> Tested (Working)
-exports.deleteOrder = catchAsyncError(async (req, res, next) => {
-  const deleteOrder = await Order.findByIdAndDelete(req.params.id);
-
-  if (!deleteOrder) {
-    return next(new AppError("Order Not Found", 404));
-  }
-  res.status(200).json({
-    status: "success",
-    data: "none",
   });
 });

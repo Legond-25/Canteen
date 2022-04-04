@@ -23,6 +23,10 @@ exports.getAllUsers = catchAsyncError(async (req, res, next) => {
 exports.createUser = catchAsyncError(async (req, res, next) => {
   const newUser = await User.create(req.body);
 
+  if (!newUser) {
+    return next(new AppError('Error creating new User. Please try again!'));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {

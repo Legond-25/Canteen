@@ -8,7 +8,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please tell us your name.'],
     trim: true,
-    validate: [validator.isAlpha, 'Please provide a valid name'],
   },
   email: {
     type: String,
@@ -17,6 +16,11 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     trim: true,
     validate: [validator.isEmail, 'Please provide a valid email address'],
+  },
+  mobile: {
+    type: Number,
+    required: [true, 'Please provide your mobile no.'],
+    unique: true,
   },
   photo: {
     type: String,
@@ -56,6 +60,7 @@ const userSchema = new mongoose.Schema({
     select: false,
   },
 });
+
 // Document Middleware
 userSchema.pre('save', async function (next) {
   // Only run this function if the password is modified
@@ -67,6 +72,13 @@ userSchema.pre('save', async function (next) {
   // Delete passwordConfirm field
   this.passwordConfirm = undefined;
 
+  next();
+});
+
+// Query middleware
+userSchema.pre(/^find/, function (next) {
+  // this points to current query
+  this.find({ active: { $ne: false } });
   next();
 });
 

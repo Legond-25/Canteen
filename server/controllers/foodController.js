@@ -39,7 +39,10 @@ exports.createFood = catchAsyncError(async (req, res, next) => {
 
 // Getting Food Item from DB ----------> Tested (Working)
 exports.getFood = catchAsyncError(async (req, res, next) => {
-  const searchedFood = await Food.findById({ _id: req.params.id });
+  const searchedFood = await Food.findById({ _id: req.params.id }).populate({
+    path: 'reviews',
+    select: 'review rating user -food',
+  });
 
   if (!searchedFood) {
     return next(new AppError('Food Item Not Found', 404));

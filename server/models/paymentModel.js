@@ -1,40 +1,43 @@
-const mongoose = require("mongoose");
-const validator = require("validator");
+const mongoose = require('mongoose');
 
 const paymentSchema = new mongoose.Schema({
-  amount: {
-    type: Number,
-    required: [true, "Please enter a Valid Amount"],
-    validate: [validator.isNumeric, "Please enter a number"],
-  },
-  recipient: {
-    type: String,
-    required: [true, "Please enter valid recipient name"],
-    validate: [validator.isAlpha, "Please provide a valid name"],
-  },
+  id: String,
+  entity: String,
+  amount: String,
+  currency: String,
   status: {
-    type: Boolean,
-  },
-  paymentMethodname: {
     type: String,
+    enum: {
+      values: ['created', 'authorized', 'captured', 'refunded', 'failed'],
+      message: 'Invalid status',
+    },
   },
-  statusText: {
+  method: {
     type: String,
+    enum: {
+      values: ['card', 'netbanking', 'wallet', 'upi'],
+      message: 'Invalid method',
+    },
   },
-  currency: {
+  order_id: String,
+  description: String,
+  refund_status: {
     type: String,
+    enum: {
+      values: ['null', 'partial', 'full'],
+      message: 'Invalid refund status',
+    },
   },
-  createdAt: {
-    type: Number,
-  },
-  updatedAt: {
-    type: Number,
-  },
-  creator: {
-    type: String,
-  },
+  amount_refunded: Number,
+  invoice_id: String,
+  captured: Boolean,
+  email: String,
+  contact: String,
+  fee: Number,
+  tax: Number,
+  created_at: Number,
 });
 
-const Payment = mongoose.model("Payment", paymentSchema);
+const Payment = mongoose.model('Payment', paymentSchema);
 
 module.exports = Payment;

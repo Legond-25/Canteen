@@ -3,105 +3,120 @@
         "name": "user1",
         "email": "user1@gmail.com",
         "photo": "user1.jpg",
-        "role": "user",
-        "password": "test12345"
+        "role": "admin",
+        "password": "test12345",
+        "mobile": 1234567890
     },
     {
         "name": "user2",
         "email": "user2@gmail.com",
         "photo": "user2.jpg",
-        "role": "user",
-        "password": "test12345"
+        "role": "manager",
+        "password": "test12345",
+        "mobile": 1234567891
     },
     {
         "name": "user3",
         "email": "user3@gmail.com",
         "photo": "user3.jpg",
-        "role": "user",
-        "password": "test12345"
+        "role": "manager",
+        "password": "test12345",
+        "mobile": 1234567892
     },
     {
         "name": "user4",
         "email": "user4@gmail.com",
         "photo": "user4.jpg",
-        "role": "user",
-        "password": "test12345"
+        "role": "manager",
+        "password": "test12345",
+        "mobile": 1234567893
     },
     {
         "name": "user5",
         "email": "user5@gmail.com",
         "photo": "user5.jpg",
-        "role": "user",
-        "password": "test12345"
+        "role": "worker",
+        "password": "test12345",
+        "mobile": 1234567894
     },
     {
         "name": "user6",
         "email": "user6@gmail.com",
         "photo": "user6.jpg",
         "role": "user",
-        "password": "test12345"
+        "password": "test12345",
+        "mobile": 1234567895
     },
     {
         "name": "user7",
         "email": "user7@gmail.com",
         "photo": "user7.jpg",
-        "role": "user",
-        "password": "test12345"
+        "role": "worker",
+        "password": "test12345",
+        "mobile": 1234567896
     },
     {
         "name": "user8",
         "email": "user8@gmail.com",
         "photo": "user8.jpg",
-        "role": "user",
-        "password": "test12345"
+        "role": "manager",
+        "password": "test12345",
+        "mobile": 1234567897
     },
     {
         "name": "user9",
         "email": "user9@gmail.com",
         "photo": "user9.jpg",
         "role": "user",
-        "password": "test12345"
+        "password": "test12345",
+        "mobile": 1234567898
     },
     {
         "name": "user10",
         "email": "user10@gmail.com",
         "photo": "user10.jpg",
         "role": "user",
-        "password": "test12345"
+        "password": "test12345",
+        "mobile": 1234567899
     },
     {
         "name": "user11",
         "email": "user11@gmail.com",
         "photo": "user11.jpg",
         "role": "user",
-        "password": "test12345"
+        "password": "test12345",
+        "mobile": 1234567810
     },
     {
         "name": "user12",
         "email": "user12@gmail.com",
         "photo": "user12.jpg",
         "role": "user",
-        "password": "test12345"
+        "password": "test12345",
+        "mobile": 1234567820
     },
     {
         "name": "user13",
         "email": "user13@gmail.com",
         "photo": "user13.jpg",
         "role": "user",
-        "password": "test12345"
+        "password": "test12345",
+        "mobile": 1234567830
     },
     {
         "name": "user14",
         "email": "user14@gmail.com",
         "photo": "user14.jpg",
         "role": "user",
-        "password": "test12345"
+        "password": "test12345",
+        "mobile": 1234567840
     },
     {
         "name": "user15",
         "email": "user15@gmail.com",
         "photo": "user15.jpg",
         "role": "user",
-        "password": "test12345"
+        "password": "test12345",
+        "mobile": 1234567850
     }
 ]

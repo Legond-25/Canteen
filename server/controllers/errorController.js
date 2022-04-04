@@ -1,9 +1,9 @@
-const AppError = require("../utils/AppError");
+const AppError = require('../utils/AppError');
 
 // Handle Validation Error function
 const handleValidationErrorDB = (err) => {
   const errors = Object.values(err.errors).map((element) => element.message);
-  const message = `Invalid Input data -${errors.join(". ")}`;
+  const message = `Invalid Input data -${errors.join('. ')}`;
   return new AppError(message, 400);
 };
 
@@ -20,7 +20,7 @@ const handleDuplicateKeyErrorDB = (err) => {
 };
 
 // Handle Wrong Jwt Error function
-const handleJsonWebTokenError = (err) => {
+const handleJsonWebTokenError = () => {
   const message = `Json Web Token is invalid, Try again `;
   return new AppError(message, 400);
 };
@@ -45,22 +45,22 @@ const sendErrorProd = (res, err) => {
 
 module.exports = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
-  err.status = err.status || "Internal Server Error";
+  err.status = err.status || 'Internal Server Error';
 
-  if (process.env.NODE_ENV === "development") {
+  if (process.env.NODE_ENV === 'development') {
     sendErrorDev(res, err);
-  } else if (process.env.NODE_ENV === "production") {
+  } else if (process.env.NODE_ENV === 'production') {
     let error = { ...err };
     error.message = err.message;
     error.name = err.name;
 
     //   Handling validation Error
-    if (error.name === "ValidationError") {
+    if (error.name === 'ValidationError') {
       error = handleValidationErrorDB(error);
     }
 
     //   Handling cast Error
-    if (error.name === "CastError") {
+    if (error.name === 'CastError') {
       error = handleCastErrorDB(error);
     }
 
@@ -70,8 +70,8 @@ module.exports = (err, req, res, next) => {
     }
 
     // Wrong JWT error
-    if (error.name === "JsonWebTokenError") {
-      error = handleJsonWebTokenError(err);
+    if (error.name === 'JsonWebTokenError') {
+      error = handleJsonWebTokenError();
     }
 
     sendErrorProd(res, error);

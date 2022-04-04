@@ -1,28 +1,52 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const cartSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-  products: [
-    {
-      productId: Number,
-      quantity: Number,
-      name: String,
-      price: Number,
+const cartSchema = new mongoose.Schema(
+  {
+    foodItems: [
+      {
+        item: {
+          type: mongoose.Schema.ObjectId,
+          ref: 'Food',
+        },
+        quantity: {
+          type: Number,
+          default: 0,
+        },
+        total: Number,
+      },
+    ],
+    user: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User',
     },
-  ],
-  active: {
-    type: Boolean,
-    default: true,
+    value: Number,
+    createdAt: {
+      type: Date,
+      default: Date.now(),
+      select: false,
+    },
   },
-  modifiedOn: {
-    type: Date,
-    default: Date.now,
-  },
+  {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
+);
+
+// Document Middleware to calculate total and value
+cartSchema.pre('save', function (next) {
+  this.foodItems.forEach((foodItem) => {
+    foodItem.total = foodItem.item.price * foodItem.quantity;
+  });
+  next();
 });
 
-const Cart = mongoose.model("Cart", cartSchema);
+cartSchema.pre('save', function (next) {
+  this.foodItems.forEach((foodItem) => {
+    this.value += foodItem.total;
+  });
+  next();
+});
+
+const Cart = mongoose.model('Cart', cartSchema);
 
 module.exports = Cart;

@@ -31,6 +31,7 @@
         "quotes":"off",
         "operator-linebreak": "off",
         "prefer-destructuring": "off",
-        "spaced-comment": "warn"
+        "spaced-comment": "warn",
+        "no-unused-expressions": "off"
     }
 }
