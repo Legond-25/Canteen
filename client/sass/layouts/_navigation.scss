@@ -6,7 +6,7 @@
   position: fixed;
   transition: all 0.3s;
   z-index: 1000;
-  opacity: 70%;
+  opacity: 75%;
 
   &:hover {
     width: 14%;
@@ -14,7 +14,7 @@
     .navigation__ulist--item {
       transform: translateX(-1rem);
       &:hover {
-        transform: scale(1.05);
+        transform: scale(1.35);
       }
     }
 

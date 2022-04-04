@@ -11,31 +11,31 @@ const Navigation = () => {
         <div className="navigation__feature">
           <ul className="navigation__ulist">
             <li className="navigation__ulist--item">
-              01
+              &nbsp;&nbsp;&nbsp; |&nbsp;
               <a href="#1" className="navigation__link">
                 Feature 1
               </a>
             </li>
             <li className="navigation__ulist--item">
-              02
+              &nbsp;&nbsp;&nbsp; |&nbsp;
               <a href="#2" className="navigation__link">
                 Feature 2
               </a>
             </li>
             <li className="navigation__ulist--item">
-              03
+              &nbsp;&nbsp;&nbsp; |&nbsp;
               <a href="#3" className="navigation__link">
                 Feature 3
               </a>
             </li>
             <li className="navigation__ulist--item">
-              04
+              &nbsp;&nbsp;&nbsp; |&nbsp;
               <a href="#4" className="navigation__link">
                 Feature 4
               </a>
             </li>
             <li className="navigation__ulist--item">
-              05
+              &nbsp;&nbsp;&nbsp; |&nbsp;
               <a href="#5" className="navigation__link">
                 Feature 5
               </a>
