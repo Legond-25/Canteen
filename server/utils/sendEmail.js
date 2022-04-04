@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 const dotenv = require('dotenv');
 const sgMail = require('@sendgrid/mail');
 
