@@ -3,6 +3,7 @@ import React from "react";
 export default function Navbar() {
   return (
     <>
+   
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <form class="form-inline my-2 my-lg-0">
           <input
@@ -16,6 +17,8 @@ export default function Navbar() {
           </button>
         </form>
       </nav>
+
+      <h1>Meals for you</h1>
 
       <nav className="navigation">
         <div className="navigation__logo">
