@@ -3,6 +3,7 @@ import axios from 'axios';
 import Navigation from './Navigation';
 import Footer from './Footer';
 
+
 function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState({
     data: false,

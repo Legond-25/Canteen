@@ -54,3 +54,4 @@ faInstagram
   )
 }
 export default Footer;
+

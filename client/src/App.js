@@ -3,7 +3,7 @@ import "./css/style.css";
 import Login from "./components/Home/Login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Registration from "./components/Home/Registration";
-import Navigation from "./components/Dashboard/Layouts/Navigation";
+import Header from "./components/Dashboard/Layouts/Header";
 
 
 function App() {
@@ -21,8 +21,10 @@ function App() {
             <Route path="/registration">
               <Registration />
             </Route>
-            <Route path="/Navigation">
-              <Navigation />
+           
+            
+            <Route path="/Header">
+              <Header/>
             </Route>
           </Switch>
         </div>
