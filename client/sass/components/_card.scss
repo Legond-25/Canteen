@@ -11,7 +11,7 @@
   &__img {
     display: block;
     width: 100%;
-    height: 18rem;
+    height: 21rem;
     object-fit: cover;
   }
 
@@ -25,10 +25,15 @@
     margin-bottom: 1.5rem;
   }
   &__description {
-    font-size: 1.5rem;
+    font-size: 2.25rem;
     letter-spacing: 0.1rem;
     line-height: 1.7;
     color: darken(#404040, 1%);
+    margin-bottom: 2.5rem;
+  }
+
+  &__amount {
+    font-size: 2.4rem;
     margin-bottom: 2.5rem;
   }
 
