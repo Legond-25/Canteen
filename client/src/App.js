@@ -4,7 +4,7 @@ import Login from "./components/Home/Login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Registration from "./components/Home/Registration";
 import Header from "./components/Dashboard/Layouts/Header";
-
+import AvailableMeals from "./components/Dashboard/Meals/AvailableMeals";
 
 function App() {
   return (
@@ -21,11 +21,13 @@ function App() {
             <Route path="/registration">
               <Registration />
             </Route>
-           
-            
+
             <Route path="/Header">
-              <Header/>
+              <Header />
             </Route>
+            {/* <Route path="/AvailableMeals">
+              <AvailableMeals />
+            </Route> */}
           </Switch>
         </div>
       </div>
