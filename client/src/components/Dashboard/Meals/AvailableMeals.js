@@ -1,9 +1,9 @@
 import React from "react";
-import img1 from "";
+//import img1 from "";
 
 function AvailableMeals(props) {
   return (
-    <div classname="card-container">
+    <div classname="card__container">
       <div classname="grid">
         <div class="grid_item">
           <div class="card">

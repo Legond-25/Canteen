@@ -25,9 +25,9 @@ function App() {
             <Route path="/Header">
               <Header />
             </Route>
-            {/* <Route path="/AvailableMeals">
+            <Route path="/AvailableMeals">
               <AvailableMeals />
-            </Route> */}
+            </Route>
           </Switch>
         </div>
       </div>
